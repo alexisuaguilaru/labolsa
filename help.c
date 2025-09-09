@@ -25,6 +25,14 @@ VERSION Beta (10/22/2024)
 
 void print_help(){
     printf("Error: Missing arguments.\n");
-    printf("Three argument are required:\n");
-    printf("Example: ./labolsa <name> <stocks> <users> <orders>\n");
+    printf("Seven argument are required:\n");
+    printf("Example: ./labolsa <name> <companies> <users> <orders> <stock_value> <n_stocks> <cash>\n");
+    printf("Where:\n");
+    printf("name [max 8 characters]: Market code.\n");
+    printf("companies [integer]: Number of Publicly Trades Companies in the Market.\n");
+    printf("users [integer]: Number dof clientes in the Market.\n");
+    printf("ordes [integer]: Number of orders allowed in the market by cycle.\n");
+    printf("stock_value [float]: Individual price for each stock.\n");
+    printf("n_stocks [integer]: Number of stocks maximum for each company.\n");
+    printf("cash [float]: Initial cash for each user.\n");
 }
