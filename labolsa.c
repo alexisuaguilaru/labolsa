@@ -42,18 +42,19 @@ int main(int argn, char **argv){
   Market *market;
   char code[8];
   int i,j,k,n,N,M,P;
-  int n_stocks_by_number;
+  int n_stocks_by_number , max_iterations;
   float stock_value , cash_for_each_user , memory_used;
   
   //printf("%i\n",argn);
-  if (argn == 8){
+  if (argn == 9){
+    if (strlen(argv[1]) > 8){print_help();return EX_USAGE;}
     if (sscanf(argv[2],"%i", &M) <= 0){print_help();return EX_USAGE;};
     if (sscanf(argv[3],"%i", &N) <= 0){print_help();return EX_USAGE;};
     if (sscanf(argv[4],"%i", &P) <= 0){print_help();return EX_USAGE;};
     if (sscanf(argv[5],"%f",&stock_value) <= 0){print_help();return EX_USAGE;}
     if (sscanf(argv[6],"%i",&n_stocks_by_number) <= 0){print_help();return EX_USAGE;}
     if (sscanf(argv[7],"%f",&cash_for_each_user) <= 0){print_help();return EX_USAGE;}
-    if (strlen(argv[1]) > 8){print_help();return EX_USAGE;}
+    if (sscanf(argv[8],"%i",&max_iterations) <= 0){print_help();return EX_USAGE;}
     market = newMarket(argv[1],M,N,P);
     //user = malloc(sizeof(User)*N);
     //stock = malloc(sizeof(Stock)*M);
@@ -85,12 +86,12 @@ int main(int argn, char **argv){
     printf("#Computing IOPs...\n");
     do{
       for(int i=0; i < market->index_user;i++){
-	j = (int)randomValue(0.0, (float)market->index_stock);
-	  n = (int)((market->users[i].money/market->stocks[j].price)*randomValue(0.0, 1.0));
-	  //printf("INFO: n= %i\n",n);
-	  if (n < 1) n = 1;
-	  //printf("INFO1:%s\n",market->stocks[j].code);
-	buy_OPI(&market->stocks[j],&market->users[i],n,market->stocks[j].price);
+	      j = (int)randomValue(0.0, (float)market->index_stock);
+	      n = (int)((market->users[i].money/market->stocks[j].price)*randomValue(0.0, 1.0));
+	        //printf("INFO: n= %i\n",n);
+        if (n >= 1){
+          buy_OPI(&market->stocks[j],&market->users[i],n,market->stocks[j].price);
+        }
       }
       k++;
 
@@ -103,7 +104,8 @@ int main(int argn, char **argv){
     //printMarket(market);
 
     printf("#Running Montecarlo...\n");
-    for(int i=0; i < 1000; i++){
+
+    for(int i=0; i < max_iterations; i++){
       printf("#%i:",i);
       montecarlo(market);
       printJapaneseCandle(market);

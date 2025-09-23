@@ -26,7 +26,7 @@ VERSION Beta (10/22/2024)
 void print_help(){
     printf("Error: Missing arguments.\n");
     printf("Seven argument are required:\n");
-    printf("Example: ./labolsa <name> <companies> <users> <orders> <stock_value> <n_stocks> <cash>\n");
+    printf("Example: ./labolsa <name> <companies> <users> <orders> <stock_value> <n_stocks> <cash> <max_iter>\n");
     printf("Where:\n");
     printf("name [max 8 characters]: Market code.\n");
     printf("companies [integer]: Number of Publicly Trades Companies in the Market.\n");
@@ -35,4 +35,5 @@ void print_help(){
     printf("stock_value [float]: Individual price for each stock.\n");
     printf("n_stocks [integer]: Number of stocks maximum for each company.\n");
     printf("cash [float]: Initial cash for each user.\n");
+    printf("max_iter [integer]: Number of iterations .\n");
 }

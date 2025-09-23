@@ -12,7 +12,7 @@ double randomValue(double a, double b) {
     double rvalue = rand() / (double) RAND_MAX;
 
     // Escalar el valor al rango [-0.05, 0.02]
-    return b + rvalue * (a - b);
+    return a + rvalue * (b - a);
 }
 
 
