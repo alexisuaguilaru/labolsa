@@ -14,6 +14,7 @@ def RunSimulation(
     ):
 
     try:
+        print(f'./labolsa {name} {companies} {users} {orders} {stock_value} {n_stock} {cash} {max_iter} > test{Experiment}.dat')
         subprocess.run(
             f'./labolsa {name} {companies} {users} {orders} {stock_value} {n_stock} {cash} {max_iter} > test{Experiment}.dat',
             shell = True,
@@ -29,14 +30,14 @@ def GridParameters(
         ParametersList: list[list],
     ):
 
-    return product(*ParametersList)
+    return enumerate(product(*ParametersList),1)
 
 def MainExecution(
         SpaceOfParameters,
     ):
 
     Exitosos = 0
-    for num_experiment , parameters in enumerate(GridParameters(SpaceOfParameters),1):
+    for num_experiment , parameters in GridParameters(SpaceOfParameters):
         result = RunSimulation(
             *parameters,
             Experiment = num_experiment,
@@ -49,13 +50,13 @@ def MainExecution(
 if __name__ == '__main__':
     SpaceOfParameters = [
         ['MEX'],
-        range(10,110,10),
+        [10,20,50,100,200,500,1000,2000,5000,10000],
         [100],
         [20_000],
         [100],
         [100],
         [20_000],
-        [15],
+        [100],
     ]
 
     Exitosos , Fallidos = MainExecution(SpaceOfParameters)
