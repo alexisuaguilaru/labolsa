@@ -49,13 +49,13 @@ def MainExecution(
 if __name__ == '__main__':
     SpaceOfParameters = [
         ['MEX'],
-        range(10,100),
+        range(10,110,10),
         [100],
-        [1000],
-        [20],
+        [20_000],
         [100],
-        [500],
-        [10],
+        [100],
+        [20_000],
+        [15],
     ]
 
     Exitosos , Fallidos = MainExecution(SpaceOfParameters)
