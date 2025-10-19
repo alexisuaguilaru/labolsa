@@ -3,7 +3,7 @@
 #
 # MAKEFILE GNU MAKE for Linux Version 1.0
 # Copyright (C) 2002 by Free Software Foundation, Inc.
-# Author: Antonio Téllez Flores <atellezf@yahoo.com.mx>
+# Author: Antonio Tï¿½llez Flores <atellezf@yahoo.com.mx>
 #
 #                         COPYING
 #
@@ -35,12 +35,21 @@
 
 CC := gcc
 LINKER := gcc
-CFLAGS := -g -ggdb -O
+CFLAGS := -g -ggdb -O -Iinclude
 LDFLAGS := 
-CFILES := $(wildcard *.c)
-OBJS := $(patsubst %.c, %.o, $(CFILES))
-PROGRAM := labolsa
+
+SRCDIR := src
+INCDIR := include
+BUILDDIR := build
+OBJDIR := $(BUILDDIR)
+
+CFILES := $(wildcard $(SRCDIR)/*.c)
+OBJS := $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(CFILES))
+
 RM := rm -f
+MKDIR := mkdir -p
+
+PROGRAM := labolsa
 INSTALAR := cp $(PROGRAM) /usr/bin/
 
 #----------------------------------------------------------------
@@ -51,7 +60,7 @@ INSTALAR := cp $(PROGRAM) /usr/bin/
 
 compile: $(PROGRAM)
 
-all:	clean compile
+all: clean compile
 	@echo -en "\n"
 clean:
 	$(RM) *~ core $(OBJS) "#*"
@@ -65,12 +74,19 @@ install:
 
 # Make depend
 
-$(OBJS): %.o: %.c
-	$(CC) -c $< 
+$(PROGRAM): $(OBJS) | $(BUILDDIR)
+	$(LINKER) $(LDFLAGS) $(OBJS) -lm -o $(PROGRAM)
+
+$(OBJS): | $(OBJDIR)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 	@echo -en "\n"
 
-$(PROGRAM): $(OBJS)
-	$(LINKER) $(LDFLAGS) $(OBJS) -lm -o $(PROGRAM)
+# Make directories
+
+$(BUILDDIR) $(OBJDIR):
+	$(MKDIR) $@
 
 #---------------------------------------------------------------
 
